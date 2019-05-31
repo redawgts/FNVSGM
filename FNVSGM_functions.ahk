@@ -7,28 +7,28 @@ doScanForSavegameNames( in_strSavegamefolder)
 	lstSavegames =
 	strName =
 	strNameOld =
-	
-	Loop, %in_strSavegamefolder%\Saves\*.fos,0,1 
+
+	Loop, %in_strSavegamefolder%\Saves\*.fos,0,1
 	{
 		strName = %A_LoopFileName%
 		if strName = autosave.fos
 			Continue
-				
+
 		else if strName = quicksave.fos
 			Continue
-		
+
 		else
 		{
-			
+
 			;scan for name of character
 			;
-			
+
 			nPos := InStr(strName, "   ")
 			If nPos >0
 			{
 				strName := SubStr(strName, nPos) ;remove the savegame prefix "Speich. "
 				strName := SubStr(strName, 4) ;remove the "- "
-			
+
 				nPos := InStr(strName, "  ")
 				If nPos >0
 				{
@@ -41,17 +41,17 @@ doScanForSavegameNames( in_strSavegamefolder)
 					lstSavegames = %lstSavegames%%strName%`n
 				}
 				strNameOld := strName
-				
-				
+
+
 			} ;if nPos >0
-			
+
 		} ;else
 	} ;loop
-	
+
 	Sort, lstSavegames, U
-	
+
 Return lstSavegames
-} ;doScanForSavegameNames()	
+} ;doScanForSavegameNames()
 
 
 
@@ -59,15 +59,15 @@ Return lstSavegames
 doScanForLIVEFolderNames( in_strSavegamefolder)
 {
 	lstFolderName=
-	
+
 	Loop, %in_strSavegamefolder%\Saves\*.*,2,0
 	{
 		strName = %A_LoopFileName%
 		lstFolderName = %lstFolderName%%strName%`n
 	} ;loop
-	
+
 	Sort, lstFolderName, U
-	
+
 Return lstFolderName
 } ;doScanForLIVEFolderNames
 
@@ -77,15 +77,15 @@ doCreateSavegameFolders( in_strProfileFolder, in_lstSavegameNames, in_lstLIVEFol
 {
 	Loop, parse, in_lstSavegameNames, `n
 	{
-		if A_LoopField != 
+		if A_LoopField !=
 		{
 			strFoldername := A_LoopField
-			
+
 			;create character folders
 			IfNotExist, %in_strProfileFolder%\%in_strSubfolder%\%strFoldername%
 			{
 				FileCreateDir, %in_strProfileFolder%\%in_strSubfolder%\%strFoldername%
-				
+
 				;create LIVE subfolder
 				Loop, parse, in_lstLIVEFoldernames, `n
 				{
@@ -107,16 +107,16 @@ doCopySavegames( in_strSavegameFolder, in_lstSavegameNames, in_lstLIVEFoldername
 	;scan normal savegame folder for savegames
 	Loop, parse, in_lstSavegameNames, `n
 	{
-		if A_LoopField != 
+		if A_LoopField !=
 		{
 			strFoldername := A_LoopField
-			
+
 			;if profile folder exist
 			IfExist, %in_strSavegameFolder%\%in_strSubfolder%\%strFoldername%
 			{
 				;copy normal savegames to profile folder
 				FileCopy, %in_strSavegameFolder%\Saves\*   %strFoldername%*.fos, %in_strSavegameFolder%\%in_strSubfolder%\%strFoldername%
-				
+
 				;scan LIVE savegame folder for savegames
 				Loop, parse, in_lstLIVEFoldernames, `n
 				{
@@ -139,7 +139,7 @@ doCopySavegames( in_strSavegameFolder, in_lstSavegameNames, in_lstLIVEFoldername
 ;-----------------
 doUpdateProfileDDL( in_strSavegamefolder, in_strSubfolder, in_strPreSelect)
 {
-	
+
 	;check if profile for preselection exists
 	if (in_strPreSelect != STANDARD)
 	{
@@ -148,7 +148,7 @@ doUpdateProfileDDL( in_strSavegamefolder, in_strSubfolder, in_strPreSelect)
 			in_strPreSelect = STANDARD
 		}
 	}
-	
+
 	;clear the dropdownlist
 	GuiControl, , ddlCharacter, |
 
@@ -183,8 +183,8 @@ doUpdateProfileDDL( in_strSavegamefolder, in_strSubfolder, in_strPreSelect)
 
 	Gosub, guiDropdownProfile
 	;update GUI
-	Gui, Show	
-	
+	Gui, Show
+
 Return lstProfilenames
 } ;doUpdateProfileDDL
 
@@ -194,26 +194,26 @@ Return lstProfilenames
 doCountSavegames( in_strProfilefolder, in_strProfilesub, in_strActiveProfile)
 {
 	iCount = 0
-	
+
 	strPath=
-	
+
 	if in_strActiveProfile=
 	{
 		iCount = 0
 	}
-	
+
 	else
 	{
 		if in_strActiveProfile=STANDARD
 		{
 			strPath = %in_strProfilefolder%\Saves
 		}
-		
+
 		else
 		{
 			strPath = %in_strProfilefolder%\%in_strProfilesub%\%in_strActiveProfile%
 		}
-		
+
 		Loop, %strPath%\*.fos,0,1
 		{
 			iCount := A_Index
