@@ -4,5 +4,6 @@ syntax: glob
 *.ini
 *.exe
 *.zip
+.hgignore
 
 .hg/
