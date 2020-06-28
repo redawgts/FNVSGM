@@ -12,7 +12,7 @@ Quickstart:
 
 This program is based on digitalfun's Fallout 3 Savegame Manager so special 
 thanks to him for releasing the source code. digitalfun's original tool can be 
-found here: http://www.fallout3nexus.com/downloads/file.php?id=708
+found here: https://www.nexusmods.com/fallout3/mods/708
 
 
 Version 1.2
